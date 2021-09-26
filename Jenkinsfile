@@ -17,7 +17,19 @@ pipeline {
             }
         }
 
-        stage('编译&构建镜像') {
+        stage('项目编译') {
+            agent none
+            steps {
+                container('nodejs') {
+                    sh 'ls'
+                    sh 'npm install --registry=https://registry.npm.taobao.org'
+					sh 'npm run build'
+                }
+
+            }
+        }
+
+        stage('构建镜像') {
             agent none
             steps {
                 container('nodejs') {
