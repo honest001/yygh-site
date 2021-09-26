@@ -4,7 +4,7 @@ import cookie from 'js-cookie'
 
 // 创建axios实例
 const service = axios.create({
-  baseURL: 'http://server-gateway.his:8080', //生产环境
+  baseURL: 'http://139.198.165.238:32607', //生产环境
   timeout: 15000 // 请求超时时间
 })
 
