@@ -60,7 +60,8 @@ spec:
       port: 3000
       protocol: TCP
       targetPort: 3000
+      nodePort: 32070
   selector:
     app: yygh-site
   sessionAffinity: None
-  type: ClusterIP
+  type: NodePort
