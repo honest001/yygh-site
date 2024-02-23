@@ -10,7 +10,7 @@ pipeline {
             agent none
             steps {
                 container('nodejs') {
-                    git(url: 'https://gitee.com/leifengyang/yygh-site.git', credentialsId: 'gitee-id', branch: 'master', changelog: true, poll: false)
+                    git(url: 'https://github.com/honest001/yygh-site.git', credentialsId: 'github-id', branch: 'master', changelog: true, poll: false)
                     sh 'ls -al'
                 }
 
@@ -44,7 +44,7 @@ pipeline {
             agent none
             steps {
                 container('nodejs') {
-                    withCredentials([usernamePassword(credentialsId : 'aliyun-docker-registry' ,usernameVariable : 'DOCKER_USER_VAR' ,passwordVariable : 'DOCKER_PWD_VAR' ,)]) {
+                    withCredentials([usernamePassword(credentialsId : 'aliyun-docker-registry2' ,usernameVariable : 'DOCKER_USER_VAR' ,passwordVariable : 'DOCKER_PWD_VAR' ,)]) {
                         sh 'echo "$DOCKER_PWD_VAR" | docker login $REGISTRY -u "$DOCKER_USER_VAR" --password-stdin'
                         sh 'docker tag yygh-site:latest $REGISTRY/$DOCKERHUB_NAMESPACE/yygh-site:SNAPSHOT-$BUILD_NUMBER'
                         sh 'docker push  $REGISTRY/$DOCKERHUB_NAMESPACE/yygh-site:SNAPSHOT-$BUILD_NUMBER'
@@ -67,7 +67,7 @@ pipeline {
         stage('发送确认邮件') {
             agent none
             steps {
-                mail(to: '17512080612@163.com', subject: 'yygh-site构建结果', body: "构建成功了  $BUILD_NUMBER")
+                mail(to: 'shan_ji_gang@163.com', subject: 'yygh-site构建结果', body: "构建成功了  $BUILD_NUMBER")
             }
         }
 
@@ -77,9 +77,9 @@ pipeline {
         GITHUB_CREDENTIAL_ID = 'github-id'
         KUBECONFIG_CREDENTIAL_ID = 'demo-kubeconfig'
         REGISTRY = 'registry.cn-hangzhou.aliyuncs.com'
-        DOCKERHUB_NAMESPACE = 'lfy_hello'
+        DOCKERHUB_NAMESPACE = 'sjg_image'
         GITHUB_ACCOUNT = 'kubesphere'
         APP_NAME = 'devops-java-sample'
-        ALIYUNHUB_NAMESPACE = 'lfy_hello'
+        ALIYUNHUB_NAMESPACE = 'sjg_image'
     }
 }
